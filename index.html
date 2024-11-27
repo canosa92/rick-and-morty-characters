@@ -3,19 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rick and Morty API</title>
+    <title>Rick and Morty character-list</title>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
   <header class="header-top">
-
     <div id="pagination" class="pagination">
-      <button id="prev-page" class="boton">Previous Page</button>
-      <img src="./assets/img/randm.png" alt="logo"/>
-      <button id="next-page" class="boton">Next Page</button>
+      <button id="prev-page" class="boton" aria-label="Previous Page">Previous Page</button>
+      <img src="./assets/img/randm.png" alt="Rick and Morty Logo"/> 
+      <button id="next-page" class="boton" aria-label="Next Page">Next Page</button>
     </div>
-  </header >
-  <ul id="character-list"></ul>
-    <script src="./js/script.js"></script>
+
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Search characters by name..." aria-label="Search character">
+      <select id="species-filter" aria-label="Filter characters by species">
+        <option value="">All Species</option>
+        <option value="Human">Human</option>
+        <option value="Alien">Alien</option>
+        <option value="Humanoid">Humanoid</option>
+      </select>
+    
+      <select id="status-filter" aria-label="Filter characters by status">
+        <option value="">All Status</option>
+        <option value="Alive">Alive</option>
+        <option value="Dead">Dead</option>
+        <option value="Unknown">Unknown</option>
+      </select>
+  
+    </div>
+    </header>
+    <main>
+      <ul id="character-list" aria-live="polite"></ul>
+    </main>
+    
+    <div id="page-info">Page 1</div>
+
+  <script src="./js/script.js"></script>
 </body>
 </html>

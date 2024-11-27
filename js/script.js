@@ -1,48 +1,76 @@
-//creamos las constantes con los elementos del Html que vamos a necesitar
-let listaPersonajes = document.getElementById('character-list')
+let listaPersonajes = document.getElementById('character-list');
 const prePage = document.getElementById('prev-page');
 const nextPage = document.getElementById('next-page');
- let paginaInicial = 'https://rickandmortyapi.com/api/character/?page=1'
-let next
-let prev
-//creamos la función para mostrar el contenido de cada personaje en la página principal
+const searchInput = document.getElementById('search');
+const speciesFilter = document.getElementById('species-filter');
+const pageInfo = document.getElementById('page-info');
 
-const personajes = (page) =>{
-  fetch(page)
-  .then((response) => {
-    if (!response.ok) {
-        throw new Error('En estos momento no funcion');
+// URL base
+let paginaInicial = 'https://rickandmortyapi.com/api/character/?page=1';
+let next, prev, currentPage = 1;
+
+const mostrarPersonajes = (page, nameFilter = '', speciesFilterValue = '') => {
+  fetch(`${page}&name=${nameFilter}&species=${speciesFilterValue}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('No se pudo obtener los personajes.');
       }
       return response.json();
     })
-  .then((data) => {
-    console.log(data)
-    next= data.info.next
-    prev= data.info.prev
-    listaPersonajes.innerHTML=''
+    .then(data => {
+      next = data.info.next;
+      prev = data.info.prev;
+      listaPersonajes.innerHTML = '';
+      pageInfo.textContent = `Page ${currentPage}`;
+      console.log(data)
 
-    data.results.forEach((personaje)=>{
-        let templatePersoanjes =`
-        <li>
-        <div class="marco">
-            <img src=${personaje.image}>
-            <h4>Nombre:${personaje.name}</h4>
-            <h4>Especie: ${personaje.species}</h4>
-          
-        </div>
-    </li>`   
-    listaPersonajes.innerHTML +=templatePersoanjes
+      // Mostrar personajes
+      data.results.forEach(personaje => {
+        let personajeHTML = `
+          <li class="personaje" data-id="${personaje.id}">
+            <div class="marco">
+              <img src="${personaje.image}" alt="${personaje.name}">
+              <h4><b>Nombre: </b> ${personaje.name}</h4>
+              <h4><b>Especie: </b> ${personaje.species}</h4>
+              <h4><b>Status: </b>${personaje.status}</h4>
+            </div>
+          </li>
+        `;
+        listaPersonajes.innerHTML += personajeHTML;
+      });
     })
-    })
-}
+    .catch(error => {
+      console.error(error);
+      alert('Hubo un error al cargar los personajes. Intenta nuevamente.');
+    });
+};
 
-nextPage.addEventListener('click',function(){
-personajes(next);
-}
-);
-prePage.addEventListener('click',function(){
-personajes(prev);
-}
-);
+// Función de búsqueda por nombre
+searchInput.addEventListener('input', () => {
+  const nameFilter = searchInput.value;
+  mostrarPersonajes(paginaInicial, nameFilter);
+});
 
-personajes(paginaInicial)
+// Función de filtro por especie
+speciesFilter.addEventListener('change', () => {
+  const speciesFilterValue = speciesFilter.value;
+  mostrarPersonajes(paginaInicial, '', speciesFilterValue);
+});
+
+// Función de paginación
+nextPage.addEventListener('click', () => {
+  if (next) {
+    currentPage++;
+    mostrarPersonajes(next);
+  }
+});
+
+prePage.addEventListener('click', () => {
+  if (prev) {
+    currentPage--;
+    mostrarPersonajes(prev);
+  }
+});
+
+// Cargar los personajes al iniciar
+mostrarPersonajes(paginaInicial);

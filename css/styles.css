@@ -41,13 +41,92 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
-/*--*/
+/* Estilo para el encabezado */
 .header-top {
   position: fixed;
   display: flex;
+  flex-direction: column;
   width: 100%;
   background-color: #60fbbf;
+  top: 0; /* Asegúrate de que el encabezado esté fijo en la parte superior */
+  z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */
+}
+
+/* Estilo para el contenido principal */
+main {
+  padding-top: 120px; /* Añadir suficiente espacio para evitar solapamiento con el header */
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del campo de búsqueda */
+#search {
+  width: 250px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #60fbbf;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#search::placeholder {
+  color: #bbb;
+}
+
+#search:focus {
+  border-color: #03b1c8;
+}
+
+/* Estilo del filtro por especie */
+#species-filter, #status-filter {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #60fbbf;
+  border-radius: 10px;
+  background-color: white;
+  transition: border-color 0.3s ease;
+}
+
+#species-filter:focus, #status-filter:focus {
+  border-color: #03b1c8;
+}
+
+/* Estilo para la información de la página */
+#page-info {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #333;
+  font-weight: bold;
+  padding: 10px 0;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Efectos de hover para los inputs */
+#search:hover, #species-filter:hover, #status-filter:hover {
+  border-color: #03b1c8;
+}
+
+.boton {
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  background-color: #03b1c8;
 }
 
 .pagination {
@@ -62,19 +141,8 @@ table {
   width: 250px;
 }
 
-.boton {
-  font-size: 16px;
-  padding: 10px;
-  border: none;
-  border-radius: 15px;
-  color: white;
-  cursor: pointer;
-  background-color: #03b1c8;
-}
-
 ul {  
   padding-top: 100px;
- 
   list-style: none;
   flex-wrap: wrap;
   display: flex;
@@ -83,5 +151,14 @@ ul {
   gap: 10px;
 }
 
+/* Estilo para los detalles de los personajes */
+.personaje h4 {
+  font-size: 16px;
+  font-weight: normal;
+}
 
-
+.personaje h4 b {
+  font-size: 18px;
+  color: #03b1c8;
+  font-weight: bold;
+}
